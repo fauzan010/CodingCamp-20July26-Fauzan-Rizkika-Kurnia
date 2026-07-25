@@ -1,0 +1,413 @@
+/* =========================================================
+   style.css — Budget & Pengeluaran App
+   Responsive, Mobile-first, Light & Dark Mode
+   ========================================================= */
+
+/* ---------- CSS Variables (Light) ---------- */
+:root {
+  --bg: #f0f4f8;
+  --surface: #ffffff;
+  --surface-alt: #f7fafc;
+  --border: #e2e8f0;
+  --text: #1a202c;
+  --text-muted: #718096;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-text: #ffffff;
+  --danger: #e53e3e;
+  --danger-hover: #c53030;
+  --balance-bg: linear-gradient(135deg, #4f46e5, #7c3aed);
+  --balance-text: #ffffff;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --transition: 0.25s ease;
+
+  /* category colours */
+  --cat-food: #e53e3e;
+  --cat-transport: #3b82f6;
+  --cat-entertainment: #38a169;
+}
+
+/* ---------- Dark Mode ---------- */
+body.dark {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-alt: #152030;
+  --border: #334155;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --primary: #6366f1;
+  --primary-hover: #818cf8;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ---------- Accessibility ---------- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Header ---------- */
+.app-header {
+  background: var(--primary);
+  color: var(--primary-text);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-lg);
+}
+
+.app-header h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+#toggleTheme {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+}
+
+#toggleTheme:hover { background: rgba(255, 255, 255, 0.35); }
+
+/* ---------- Main Container ---------- */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ---------- Card ---------- */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.card h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+/* ---------- Balance Card ---------- */
+.balance-card {
+  background: var(--balance-bg);
+  border: none;
+  text-align: center;
+  padding: 1.75rem 1.25rem;
+}
+
+.balance-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.balance-amount {
+  color: #ffffff;
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Section Header (with select) ---------- */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.section-header h2 { margin-bottom: 0; }
+
+/* ---------- Monthly Summary ---------- */
+.monthly-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem;
+}
+
+.monthly-item {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.monthly-item .m-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.monthly-item .m-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-top: 0.2rem;
+  color: var(--primary);
+}
+
+.monthly-item .m-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.1rem;
+}
+
+/* ---------- Form ---------- */
+.form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  color: var(--text);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+  appearance: auto;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+input.error, select.error { border-color: var(--danger); }
+
+.field-error {
+  font-size: 0.78rem;
+  color: var(--danger);
+  min-height: 1em;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.25rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), transform 0.1s;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-text);
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.btn-primary:hover { background: var(--primary-hover); }
+
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border: 1.5px solid var(--danger);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.btn-danger:hover { background: var(--danger); color: #fff; }
+
+/* ---------- Chart ---------- */
+.chart-wrapper {
+  position: relative;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+#expenseChart { width: 100% !important; }
+
+.chart-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  padding: 0.5rem 0;
+  display: none;
+}
+
+/* ---------- Sort Controls ---------- */
+.sort-controls select {
+  width: auto;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.82rem;
+}
+
+/* ---------- Transaction List ---------- */
+.list-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  padding: 1.5rem 0;
+}
+
+.transaction-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+/* Scrollbar */
+.transaction-list::-webkit-scrollbar { width: 5px; }
+.transaction-list::-webkit-scrollbar-track { background: transparent; }
+.transaction-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.transaction-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.8rem 1rem;
+  animation: slideIn 0.2s ease;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.item-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.cat-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.cat-Makanan        { background: rgba(229,62,62,0.15);   color: var(--cat-food); }
+.cat-Transportasi   { background: rgba(59,130,246,0.15);  color: var(--cat-transport); }
+.cat-Hiburan        { background: rgba(56,161,105,0.15);  color: var(--cat-entertainment); }
+
+.item-amount {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* ---------- Footer ---------- */
+.app-footer {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Responsive (tablet+) ---------- */
+@media (min-width: 540px) {
+  .app-header h1 { font-size: 1.4rem; }
+  .balance-amount { font-size: 2.75rem; }
+  .container { padding: 1.5rem; gap: 1.25rem; }
+}
+
+@media (min-width: 768px) {
+  .container { padding: 2rem 1.5rem; }
+  .card { padding: 1.5rem; }
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budget & Pengeluaran</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body class="light">
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <h1>💰 Budget & Pengeluaran</h1>
+    <button id="toggleTheme" aria-label="Ganti tema" title="Ganti tema">🌙</button>
+  </header>
+
+  <main class="container">
+
+    <!-- SALDO TOTAL -->
+    <section class="card balance-card" aria-label="Saldo total">
+      <p class="balance-label">Total Pengeluaran</p>
+      <p class="balance-amount" id="totalBalance">Rp 0</p>
+    </section>
+
+    <!-- RINGKASAN BULANAN -->
+    <section class="card" id="monthlySummarySection" aria-label="Ringkasan bulanan">
+      <div class="section-header">
+        <h2>📅 Ringkasan Bulanan</h2>
+        <select id="monthFilter" aria-label="Pilih bulan">
+          <option value="all">Semua Bulan</option>
+        </select>
+      </div>
+      <div id="monthlySummaryContent" class="monthly-grid"></div>
+    </section>
+
+    <!-- FORMULIR TAMBAH TRANSAKSI -->
+    <section class="card" aria-label="Tambah transaksi">
+      <h2>➕ Tambah Transaksi</h2>
+      <form id="transactionForm" novalidate>
+        <div class="form-group">
+          <label for="itemName">Nama Barang</label>
+          <input
+            type="text"
+            id="itemName"
+            placeholder="Contoh: Nasi Goreng"
+            autocomplete="off"
+            maxlength="60"
+          />
+          <span class="field-error" id="nameError"></span>
+        </div>
+        <div class="form-group">
+          <label for="itemAmount">Jumlah (Rp)</label>
+          <input
+            type="number"
+            id="itemAmount"
+            placeholder="Contoh: 25000"
+            min="1"
+          />
+          <span class="field-error" id="amountError"></span>
+        </div>
+        <div class="form-group">
+          <label for="itemCategory">Kategori</label>
+          <select id="itemCategory">
+            <option value="">-- Pilih Kategori --</option>
+            <option value="Makanan">🍔 Makanan</option>
+            <option value="Transportasi">🚗 Transportasi</option>
+            <option value="Hiburan">🎮 Hiburan</option>
+          </select>
+          <span class="field-error" id="categoryError"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Tambah Transaksi</button>
+      </form>
+    </section>
+
+    <!-- BAGAN PIE CHART -->
+    <section class="card" aria-label="Grafik pengeluaran">
+      <h2>📊 Distribusi Pengeluaran</h2>
+      <div class="chart-wrapper">
+        <canvas id="expenseChart" aria-label="Pie chart pengeluaran per kategori" role="img"></canvas>
+      </div>
+      <p class="chart-empty" id="chartEmpty">Belum ada data untuk ditampilkan.</p>
+    </section>
+
+    <!-- DAFTAR TRANSAKSI -->
+    <section class="card" aria-label="Daftar transaksi">
+      <div class="section-header">
+        <h2>🧾 Daftar Transaksi</h2>
+        <div class="sort-controls">
+          <label for="sortBy" class="sr-only">Urutkan berdasarkan</label>
+          <select id="sortBy" aria-label="Urutkan berdasarkan">
+            <option value="date-desc">Terbaru</option>
+            <option value="date-asc">Terlama</option>
+            <option value="amount-desc">Jumlah ↓</option>
+            <option value="amount-asc">Jumlah ↑</option>
+            <option value="category">Kategori A–Z</option>
+          </select>
+        </div>
+      </div>
+      <p class="list-empty" id="listEmpty">Belum ada transaksi. Tambahkan di atas!</p>
+      <ul class="transaction-list" id="transactionList" aria-live="polite"></ul>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>CodingCamp 2026 · Fauzan Rizkika Kurnia</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
